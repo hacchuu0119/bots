@@ -13,6 +13,23 @@ async def on_message(message):
     if message.content.startswith('/neko'):
         reply = 'にゃーん'
         await client.send_message(message.channel, reply)
+        
+    if message.content.startswith('/waku'):
+        reply = 'waku'
+        await client.send_message(message.channel, reply)
+
+    if client.user.id in message.content:
+        print(message.author.mention)
+        if (message.author.mention == "<@330411083980603394>"):
+            reply = f'{message.author.mention} 様！好きです！'
+
+        elif(message.author.mention == "<@294059343068921857>"):
+            reply = f'(何言ってんだ、{message.author.mention} ？？)'
+        else:
+            reply = f'{message.author.mention} 呼んだ？？'
+        print(reply)
+        echo_method(reply)
+        await client.send_message(message.channel, reply)
 
 # botの接続と起動
 # （tokenにはbotアカウントのアクセストークンを入れてください）
