@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 import discord # インストールした discord.py
 import asyncio
 client = discord.Client() # 接続に使用するオブジェクト
