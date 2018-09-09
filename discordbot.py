@@ -3,6 +3,11 @@
 import SearchGeneral
 import discord  # インストールした discord.py
 import asyncio
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-t', '--token', help='Disignate the access token to connect to your discord bot')
+args = parser.parse_args()
 
 client = discord.Client()  # 接続に使用するオブジェクト
 
@@ -15,15 +20,13 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if '絶' in message.content and 'ある' in message.content or '今日' in message.content or 'する':
-        reply1 = '有りますよ！！'
-        await client.send_message(message.channel, reply1)
-
-    if 'シーバー' in message.content:
-        reply = 'しばさん頑張って！'
-        await client.send_message(message.channel, reply1)
-
-    sarch = SearchGeneral.ReplyClass(message.content, )
+    # 発言ユーザが自分の場合return
+    if client.user == message.author: return
+    bot_reply = SearchGeneral.ReplyClass(message.content)
+    if bot_reply.full_text_match() is not None:
+        print(bot_reply.full_text_match())
+        reply = bot_reply.full_text_match()
+        await client.send_message(message.channel, reply)
 
     if message.content.startswith('/neko'):
         reply = 'にゃーん'
@@ -47,17 +50,21 @@ async def on_message(message):
 
     if client.user.id in message.content:
         print(message.author.mention)
-        if (message.author.mention == "<@330411083980603394>"):
-            reply = f'お呼びですか、{message.author.mention} 様: {message.content}！'
-
-        elif (message.author.mention == "<@294059343068921857>"):
+        # 自分用
+        if message.author.mention == "<@330411083980603394>":
+            reply = f'お呼びですか、{message.author.mention} 様！'
+        # シエルさん
+        elif message.author.mention == "<@294059343068921857>":
             reply = f'(何言ってんだ、{message.author.mention} ？？)'
+        #
+        elif message.author.mention == "<@301692231775944716>":
+            reply = f'あ、{message.author.mention}だ！ かわいい！SS撮ろ！'
         else:
-            reply = f'{message.author.mention}さん、なにかご用ですか？ {client.user}'
+            reply = f'{message.author.mention}さん、なにかご用ですか？'
         print(reply)
         await client.send_message(message.channel, reply)
 
 
 # botの接続と起動
 # （tokenにはbotアカウントのアクセストークンを入れてください）
-client.run('NDg3NjEwODY5MTE1NzgxMTIx.DnQLQw.M0Fg5EOxeDsWvOtda7dq2ebQAgQ')
+client.run(args.token)

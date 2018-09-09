@@ -3,7 +3,8 @@
 import SearchReply
 import AcceptMessage
 
-class ReplyClass():
+
+class ReplyClass:
 
     def __init__(self, comment):
         self.get_comment = comment
@@ -12,5 +13,5 @@ class ReplyClass():
         acceptmessage = AcceptMessage.AcceptMessage()
         match_list = acceptmessage.return_match_list()
         reply_list = acceptmessage.return_reply_list()
-        reply = SearchReply(self.get_comment, match_list, reply_list)
-        return reply
+        reply = SearchReply.SearchReply(self.get_comment, match_list, reply_list)
+        return reply.return_reply()
