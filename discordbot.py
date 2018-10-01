@@ -4,10 +4,20 @@ import SearchGeneral
 import discord  # インストールした discord.py
 import asyncio
 import argparse
+import configparser
+from DBManager import DBManager
+import UserGeneral
+import CommandGeneral
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-t', '--token', help='Disignate the access token to connect to your discord bot')
+parser.add_argument('-t', '--token', help='Designate the access token to connect to your discord bot')
+parser.add_argument('-c', '--config', help='Enter config file with path')
 args = parser.parse_args()
+
+config = configparser.ConfigParser()
+config.read(args.config)
+
+db_obj = DBManager(config['DB'])
 
 client = discord.Client()  # 接続に使用するオブジェクト
 
@@ -16,16 +26,26 @@ client = discord.Client()  # 接続に使用するオブジェクト
 @client.event
 async def on_ready():
     print('ログインしました')
+    UserGeneral.update_user_db(db_obj, client.get_all_members())
+    # for user in client.get_all_members():
 
 
 @client.event
 async def on_message(message):
-    # 発言ユーザが自分の場合return
-    if client.user == message.author: return
-    bot_reply = SearchGeneral.ReplyClass(message.content)
-    if bot_reply.full_text_match() is not None:
-        print(bot_reply.full_text_match())
-        reply = bot_reply.full_text_match()
+    if client.user == message.author: return  # 発言ユーザが自分の場合return
+
+    if message.content.startswith('/'):
+        reply = CommandGeneral.command_search(message.content)
+
+        await client.send_message(message.channel, reply)
+        return
+
+    print(f'{message.author}: {message.content} :{message.author.mention}')
+    bot_reply = SearchGeneral.ReplyClass(db_obj)  # searchGeneralの初期化
+
+    if bot_reply.bool_fulltext(message.content):
+        reply = bot_reply.matching_fulltext(message.content)
+
         await client.send_message(message.channel, reply)
 
     if message.content.startswith('/neko'):
@@ -49,7 +69,6 @@ async def on_message(message):
         await client.send_message(message.channel, 'Done sleeping')
 
     if client.user.id in message.content:
-        print(message.author.mention)
         # 自分用
         if message.author.mention == "<@330411083980603394>":
             reply = f'お呼びですか、{message.author.mention} 様！'
@@ -61,7 +80,6 @@ async def on_message(message):
             reply = f'あ、{message.author.mention}だ！ かわいい！SS撮ろ！'
         else:
             reply = f'{message.author.mention}さん、なにかご用ですか？'
-        print(reply)
         await client.send_message(message.channel, reply)
 
 
