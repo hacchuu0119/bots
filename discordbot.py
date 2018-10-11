@@ -1,23 +1,23 @@
 # coding: UTF-8
 
+
 import SearchGeneral
 import discord  # インストールした discord.py
 import asyncio
 import argparse
-import configparser
 from DBManager import DBManager
 import UserGeneral
-import CommandGeneral
+from CommandGeneral import Command
+from ConfigManager import Config
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--token', help='Designate the access token to connect to your discord bot')
 parser.add_argument('-c', '--config', help='Enter config file with path')
 args = parser.parse_args()
 
-config = configparser.ConfigParser()
-config.read(args.config)
-
-db_obj = DBManager(config['DB'])
+# Config(args.config)
+Config.set_config(args.config)
+DBManager.set_db()
 
 client = discord.Client()  # 接続に使用するオブジェクト
 
@@ -26,22 +26,21 @@ client = discord.Client()  # 接続に使用するオブジェクト
 @client.event
 async def on_ready():
     print('ログインしました')
-    UserGeneral.update_user_db(db_obj, client.get_all_members())
+    UserGeneral.update_user_db(client.get_all_members())
     # for user in client.get_all_members():
 
 
 @client.event
 async def on_message(message):
     if client.user == message.author: return  # 発言ユーザが自分の場合return
-
+    print(f'{message.author}: {message.content} :{message.author.mention}')
     if message.content.startswith('/'):
-        reply = CommandGeneral.command_search(message.content)
+        reply = Command.command_search(message.content)
 
         await client.send_message(message.channel, reply)
         return
 
-    print(f'{message.author}: {message.content} :{message.author.mention}')
-    bot_reply = SearchGeneral.ReplyClass(db_obj)  # searchGeneralの初期化
+    bot_reply = SearchGeneral.ReplyClass()  # searchGeneralの初期化
 
     if bot_reply.bool_fulltext(message.content):
         reply = bot_reply.matching_fulltext(message.content)

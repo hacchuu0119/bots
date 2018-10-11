@@ -8,8 +8,8 @@ class ReplyClass:
 
     match_word = []
 
-    def __init__(self, db_obj):
-        self.accept_message = AcceptMessage.AcceptMessage(db_obj)  # メソッドを初期化
+    def __init__(self):
+        self.accept_message = AcceptMessage.AcceptMessage()  # メソッドを初期化
         self.match_list = self.accept_message.return_match_list()
 
     def bool_fulltext(self, get_comment):

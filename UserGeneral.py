@@ -1,8 +1,8 @@
 from DBManager import DBManager
 
 
-def update_user_db(db_obj, client):  # メソッドが呼ばれて１度しか呼ばれないので、initに入れるか関数化する
-    conn = db_obj.connector()
+def update_user_db(client):  # メソッドが呼ばれて１度しか呼ばれないので、initに入れるか関数化する
+    conn = DBManager.connector()
     cursor = conn.cursor()
     for user in client:
         mention = user.mention if not '!' in user.mention else user.mention.replace('!', '')
@@ -21,4 +21,4 @@ def update_user_db(db_obj, client):  # メソッドが呼ばれて１度しか�
                        )
     for i in cursor:
         print(i)
-    db_obj.commit()
+    DBManager.commit()

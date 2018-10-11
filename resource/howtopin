@@ -1,0 +1,7 @@
+このコマンドは引数が必要だよ！
+/pin list                           登録されてるpinのkeyを出すよ！
+/pin insert key:value   keyとvalueにそれぞれ値を入れると登録されるよ！
+/pin delete key             keyに連なるpinを削除しちゃうよ・・
+
+今の所<delete>は実装されてない！！
+のでやっても無駄だよ！！消えないよ！！
