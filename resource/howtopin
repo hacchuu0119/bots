@@ -3,7 +3,6 @@
 /pin insert key:value   keyとvalueにそれぞれ値を入れると登録されるよ！
 /pin delete key             keyに連なるpinを削除しちゃうよ・・
 
-今の所<delete>は実装されてない！！
-のでやっても無駄だよ！！消えないよ！！
+deleteは複数keyを並べると全部一気に消せる！
 
 あと<insert>はkeyが同じだと上書きされるから注意ねっ☆

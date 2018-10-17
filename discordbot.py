@@ -34,8 +34,8 @@ async def on_ready():
 async def on_message(message):
     if client.user == message.author: return  # 発言ユーザが自分の場合return
     print(f'{message.author}: {message.content} :{message.author.mention}')
-    if message.content.startswith('/'):
-        reply = Command.command_search(message.content)
+    if message.content.startswith('/') or message.content.startswith('ダイス'):
+        reply = Command.command_search(message.content, message.author)
 
         await client.send_message(message.channel, reply)
         return
