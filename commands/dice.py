@@ -15,8 +15,9 @@ def dice_command(args, user):
     if 'd' in args or 'D' in args or 4 > len(args.split()) >= 2:  # [d][D][ ]で区切られてるなら分割する
         tmp = re.split('d|D| ', args)
         time = tmp[0]
-        dice_type = tmp[1] + ' ' + tmp[2]
+        dice_type = tmp[1]
         if sf_check:
+            dice_type = tmp[1] + ' ' + tmp[2]
             dice_type, status = re.split('<=| |<', dice_type)
         res = dice_roll(int(time), int(dice_type))
         if len(res) > 1:
