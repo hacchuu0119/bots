@@ -34,7 +34,7 @@ async def on_ready():
 async def on_message(message):
     if client.user == message.author: return  # 発言ユーザが自分の場合return
     print(f'{message.author}: {message.content} :{message.author.mention}')
-    if message.content.startswith('/') or message.content.startswith('ダイス'):
+    if message.content.startswith('/') or message.content.startswith('ダイス') or message.content.startswith('ルーレット'):
         reply = Command.command_search(message.content, message.author)
 
         await client.send_message(message.channel, reply)
@@ -45,10 +45,6 @@ async def on_message(message):
     if bot_reply.bool_fulltext(message.content):
         reply = bot_reply.matching_fulltext(message.content)
 
-        await client.send_message(message.channel, reply)
-
-    if message.content.startswith('/neko'):
-        reply = 'にゃーん'
         await client.send_message(message.channel, reply)
 
     if message.content.startswith('/waku'):

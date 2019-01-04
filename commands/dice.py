@@ -6,6 +6,9 @@ import re
 
 def dice_command(args, user):
     args = args.strip()  # 引数の改行空白削除
+
+    if 'ルーレット' in args:
+        args = '1d100'
     print(args)
 
     sf_check = False

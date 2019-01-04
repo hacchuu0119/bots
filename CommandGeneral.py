@@ -30,3 +30,5 @@ class Command:
 
         elif command == 'dice' or command == 'ダイス':
             return dice_command(args, user)
+        elif command == 'ルーレット':
+            return dice_command('ルーレット', user)
