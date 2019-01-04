@@ -20,6 +20,9 @@ class Command:
     def command_search(cls, message, user):
         if len(message.split()) > 1:  # 2以上なら引数あり
             command, args = message.replace('/', '', 1).split(' ', 1)
+        elif message == 'ルーレット':
+            command = 'ルーレット'
+            args = 'ルーレット'
         else:
             return pin_help(message)
 
