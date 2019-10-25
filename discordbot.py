@@ -1,14 +1,9 @@
 # coding: UTF-8
-from discord.ext.commands import bot
 
 import discord
-import asyncio
 import argparse
-# from DBManager import DBManager
-# import UserGeneral
-from CommandGeneral import Command
-from ConfigManager import Config
-from SearchGeneral import MatchAndResponse
+from CommandCTL import Command
+from CustomResponse import CustomResponse
 from ConfigManager import Config
 
 
@@ -42,7 +37,7 @@ def main():
             await message.channel.send(reply)
             return
 
-        bot_response = MatchAndResponse(message.content, message.guild.id)  # searchGeneralの初期化
+        bot_response = CustomResponse(message.content, message.guild.id)  # searchGeneralの初期化
 
         if bot_response.bot_response_list:
             bot_res = bot_response.rand_pick_reply()

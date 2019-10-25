@@ -16,11 +16,14 @@ def router(message):
 
     command = message.content.split()[0].replace("!", "", 1).replace("！", "", 1)
 
-    if command == 'pin':
+    if command == 'res':
         return custom_response(message)
 
     elif command == 'dice' or command == 'ダイス' or command == 'ルーレット':
         return dice(message)
+
+    else:
+        return f'{command}っていうコマンドはないよ:thinking:'
 
 
 class Command:

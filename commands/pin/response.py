@@ -36,7 +36,7 @@ def delete_all(key, guild_id):
 def delete_one_pair(key, value, guild_id):
     if check_existence_bot_response(key, value, guild_id):
         delete_one_bot_response(key, value, guild_id)
-        return f'[{key}: {value}]を削除したよー'
+        return f'[{key}: {value}]を削除完了。'
 
     else:
         return f'{key}:{value} は登録されてないよ？？\n' \
@@ -52,8 +52,8 @@ def delete_key_only(key, guild_id):
 
     elif response_num > 1:
         return f'[{key}]には複数の返事があるよ！！\n' \
-            f'全部消したい場合は -> !responce delete all {key}\n' \
-            f'一つだけ消したい場合は -> !responce delete {key} [消したい返答]\n' \
+            f'全部消したい場合は -> !res delete all {key}\n' \
+            f'一つだけ消したい場合は -> !res delete {key} [消したい返答]\n' \
             f'って打ってね。やりなおし！！'
 
     else:
@@ -91,4 +91,4 @@ def custom_response(message):
 
     except ValueError:
         return f'{message.author.mention}さんの、コマンド処理に失敗したよ＞＜\n' \
-            f'[!responce help] って打って見てねっ'
+            f'[!res help] って打って見てねっ'
