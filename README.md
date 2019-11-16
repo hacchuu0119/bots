@@ -1,5 +1,16 @@
 # discord bot
 
-## 使い方
-!dice 1D100
-!response insert key:value
+# how to
+## dice
+`!dice 1D100`
+
+`!ルーレット`
+
+## Custom response
+`!res insert KEY VALUE`
+
+`!res delete`
+
+`!res delete all KEY`
+
+`!res delete KEY VALUE` 

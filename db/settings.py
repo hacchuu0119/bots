@@ -1,10 +1,12 @@
-import sqlalchemy
 from sqlalchemy import *
 from sqlalchemy.orm import *
 from sqlalchemy.ext.declarative import declarative_base
 from ConfigManager import Config
+from pathlib import Path
 
-Config.set_config('/Users/usr0200618/study/bot/config.ini')
+config_path = Path.cwd() / "config.ini"
+
+Config.set_config(config_path)
 config = Config.get_config('DB')
 
 # mysqlのDBの設定
