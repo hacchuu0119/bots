@@ -25,13 +25,17 @@ def get_bot_response(user_response, guild_id):
 
 
 def insert_bot_response(match_word, guild_id, response_value, user_id):
-    mart = MatchAndResponseTable()
-    mart.server_id = guild_id
-    mart.match_word = match_word
-    mart.author_id = user_id
-    mart.response_word = response_value
-    session.add(mart)
-    session.commit()
+    try:
+        mart = MatchAndResponseTable()
+        mart.server_id = guild_id
+        mart.match_word = match_word
+        mart.author_id = user_id
+        mart.response_word = response_value
+        session.add(mart)
+        session.commit()
+    except:
+        session.rollback()
+        raise
 
 
 def check_existence_bot_response(match_word, response_value, guild_id):
@@ -44,15 +48,23 @@ def check_existence_bot_response(match_word, response_value, guild_id):
 
 
 def delete_all_key_bot_response(match_word, guild_id):
-    session.query(MatchAndResponseTable)\
-        .filter(MatchAndResponseTable.match_word == match_word,
-                MatchAndResponseTable.server_id == guild_id)\
-        .delete()
+    try:
+        session.query(MatchAndResponseTable)\
+            .filter(MatchAndResponseTable.match_word == match_word,
+                    MatchAndResponseTable.server_id == guild_id)\
+            .delete()
+    except:
+        session.rollback()
+        raise
 
 
 def delete_one_bot_response(match_word, response_value, guild_id):
-    session.query(MatchAndResponseTable)\
-        .filter(MatchAndResponseTable.match_word == match_word,
-                MatchAndResponseTable.server_id == guild_id,
-                MatchAndResponseTable.response_word == response_value)\
-        .delete()
+    try:
+        session.query(MatchAndResponseTable)\
+            .filter(MatchAndResponseTable.match_word == match_word,
+                    MatchAndResponseTable.server_id == guild_id,
+                    MatchAndResponseTable.response_word == response_value)\
+            .delete()
+    except:
+        session.rollback()
+        raise
